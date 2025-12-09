@@ -1,7 +1,5 @@
 <?php
-// Конфигурация за връзка с базата данни и общи настройки
 
-// Настройки за базата данни
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'animetalk_bg');
 define('DB_USER', 'root');
@@ -17,7 +15,6 @@ if (!session_id()) {
     session_start();
 }
 
-// PDO връзка с базата данни
 try {
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
@@ -33,7 +30,6 @@ try {
     die("Грешка при свързването с базата данни: " . $e->getMessage());
 }
 
-// Помощни функции
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }

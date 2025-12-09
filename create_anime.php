@@ -240,10 +240,8 @@ document.getElementById('image_url').addEventListener('input', function() {
     }
 });
 
-// Автоматично преоразмеряване на textarea
 autoResizeTextarea();
 
-// Валидация на формата
 document.getElementById('createAnimeForm').addEventListener('submit', function(e) {
     if (!validateForm('createAnimeForm')) {
         e.preventDefault();

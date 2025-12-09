@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// AJAX файл за действия с коментари (добавяне, харесване, etc.)
 header('Content-Type: application/json');
 
 if (!isLoggedIn()) {
@@ -40,7 +39,6 @@ function addComment() {
         return;
     }
     
-    // Проверка дали дискусията съществува
     $stmt = $pdo->prepare("SELECT id FROM discussions WHERE id = ?");
     $stmt->execute([$discussionId]);
     if (!$stmt->fetch()) {
@@ -80,7 +78,6 @@ function toggleCommentLike() {
         return;
     }
     
-    // Проверка дали коментарът съществува
     $stmt = $pdo->prepare("SELECT id FROM comments WHERE id = ?");
     $stmt->execute([$commentId]);
     if (!$stmt->fetch()) {
@@ -104,13 +101,11 @@ function toggleCommentLike() {
             $stmt->execute([$commentId, $_SESSION['user_id']]);
             $liked = false;
         } else {
-            // Добавяне на харесване
             $stmt = $pdo->prepare("INSERT INTO comment_likes (comment_id, user_id) VALUES (?, ?)");
             $stmt->execute([$commentId, $_SESSION['user_id']]);
             $liked = true;
         }
         
-        // Изчисляване на новия брой харесвания
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM comment_likes WHERE comment_id = ?");
         $stmt->execute([$commentId]);
         $likeCount = $stmt->fetchColumn();

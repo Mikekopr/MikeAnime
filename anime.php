@@ -7,7 +7,6 @@ if (!$animeId) {
     redirectTo('index.php');
 }
 
-// Извличане на информация за анимето
 $stmt = $pdo->prepare("
     SELECT 
         a.*,
@@ -29,7 +28,6 @@ if (!$anime) {
 
 $pageTitle = $anime['title'];
 
-// Извличане на рейтинг разбивката (1-10)
 $stmt = $pdo->prepare("
     SELECT rating, COUNT(*) as count 
     FROM ratings 
@@ -40,7 +38,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$animeId]);
 $ratingBreakdown = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
-// Проверка дали текущият потребител е гласувал
 $userRating = null;
 if (isLoggedIn()) {
     $stmt = $pdo->prepare("SELECT rating FROM ratings WHERE anime_id = ? AND user_id = ?");
@@ -48,7 +45,6 @@ if (isLoggedIn()) {
     $userRating = $stmt->fetchColumn();
 }
 
-// Извличане на дискусии за това аниме
 $stmt = $pdo->prepare("
     SELECT 
         d.id,
