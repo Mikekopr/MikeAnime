@@ -42,7 +42,6 @@ if (!empty($imageUrl)) {
     }
 }
 
-// Проверка за дублиране
 $stmt = $pdo->prepare("SELECT id FROM anime WHERE title = ?");
 $stmt->execute([$title]);
 if ($stmt->fetch()) {

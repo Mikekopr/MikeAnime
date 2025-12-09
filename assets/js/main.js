@@ -1,5 +1,3 @@
-// AnimeTalk BG Main JavaScript
-
 document.addEventListener('DOMContentLoaded', function() {
     initSearchFunctionality();
     initRatingSystem();
@@ -8,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initToasts();
 });
 
-// Инициализиране на търсачката
 function initSearchFunctionality() {
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
@@ -29,7 +26,6 @@ function initSearchFunctionality() {
             }, 300);
         });
 
-        // Скриване на резултатите при клик извън тях
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 hideSearchResults();
@@ -38,7 +34,6 @@ function initSearchFunctionality() {
     }
 }
 
-// Извършване на търсене
 function performSearch(query) {
     const searchResults = document.getElementById('searchResults');
     
@@ -62,7 +57,6 @@ function performSearch(query) {
     });
 }
 
-// Показване на резултатите от търсенето
 function displaySearchResults(results) {
     const searchResults = document.getElementById('searchResults');
     
@@ -89,7 +83,6 @@ function displaySearchResults(results) {
     searchResults.innerHTML = html;
 }
 
-// Скриване на резултатите от търсенето
 function hideSearchResults() {
     const searchResults = document.getElementById('searchResults');
     if (searchResults) {
@@ -97,12 +90,10 @@ function hideSearchResults() {
     }
 }
 
-// Преминаване към страницата на аниме
-function goToAnime(animeId) {
+function goToAnime(id) {
     window.location.href = `anime.php?id=${animeId}`;
 }
 
-// Инициализиране на рейтинг системата
 function initRatingSystem() {
     const ratingInputs = document.querySelectorAll('.rating-input input[type="radio"]');
     
@@ -116,8 +107,7 @@ function initRatingSystem() {
     });
 }
 
-// Изпращане на рейтинг
-function submitRating(animeId, rating) {
+function sendRating(animeId, rating) {
     fetch('rate.php', {
         method: 'POST',
         headers: {
@@ -140,7 +130,6 @@ function submitRating(animeId, rating) {
     });
 }
 
-// Обновяване на показаната оценка
 function updateRatingDisplay(average, total) {
     const avgElement = document.getElementById('averageRating');
     const totalElement = document.getElementById('totalRatings');
@@ -154,7 +143,6 @@ function updateRatingDisplay(average, total) {
     }
 }
 
-// Инициализиране на действията с коментари
 function initCommentActions() {
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('like-btn') || e.target.closest('.like-btn')) {
@@ -167,8 +155,7 @@ function initCommentActions() {
     });
 }
 
-// Превключване на харесване на коментар
-function toggleCommentLike(commentId, button) {
+function toggleCommentLike(commentId) {
     fetch('comment_actions.php', {
         method: 'POST',
         headers: {
@@ -201,7 +188,6 @@ function toggleCommentLike(commentId, button) {
     });
 }
 
-// Инициализиране на cookie banner
 function initCookieBanner() {
     const cookieBanner = document.getElementById('cookieBanner');
     if (cookieBanner && !getCookie('cookies_accepted')) {
@@ -209,7 +195,6 @@ function initCookieBanner() {
     }
 }
 
-// Приемане на cookies
 function acceptCookies() {
     setCookie('cookies_accepted', 'true', 365);
     const cookieBanner = document.getElementById('cookieBanner');
@@ -218,7 +203,6 @@ function acceptCookies() {
     }
 }
 
-// Помощни функции за cookies
 function setCookie(name, value, days) {
     const expires = new Date();
     expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -236,9 +220,7 @@ function getCookie(name) {
     return null;
 }
 
-// Инициализиране на toast съобщенията
 function initToasts() {
-    // Създаване на контейнер за toasts ако не съществува
     if (!document.querySelector('.toast-container')) {
         const container = document.createElement('div');
         container.className = 'toast-container';
@@ -246,7 +228,6 @@ function initToasts() {
     }
 }
 
-// Показване на toast съобщение
 function showToast(message, type = 'info') {
     const container = document.querySelector('.toast-container');
     const toastId = 'toast-' + Date.now();
@@ -276,13 +257,11 @@ function showToast(message, type = 'info') {
     
     toast.show();
     
-    // Премахване на toast след скриване
     toastElement.addEventListener('hidden.bs.toast', function() {
         this.remove();
     });
 }
 
-// Добавяне на коментар
 function addComment(discussionId, content) {
     if (!content.trim()) {
         showToast('Моля въведете съдържание на коментара', 'warning');
@@ -300,7 +279,6 @@ function addComment(discussionId, content) {
     .then(data => {
         if (data.success) {
             showToast('Коментарът е добавен успешно!', 'success');
-            // Презареждане на страницата за показване на новия коментар
             setTimeout(() => {
                 location.reload();
             }, 1000);
@@ -314,8 +292,7 @@ function addComment(discussionId, content) {
     });
 }
 
-// Валидация на форми
-function validateForm(formId) {
+function validateForm(form) {
     const form = document.getElementById(formId);
     if (!form) return false;
     
@@ -334,7 +311,6 @@ function validateForm(formId) {
     return isValid;
 }
 
-// Превключване на видимостта на паролата
 function togglePasswordVisibility(inputId) {
     const input = document.getElementById(inputId);
     const icon = document.querySelector(`[onclick="togglePasswordVisibility('${inputId}')"] i`);
@@ -348,7 +324,6 @@ function togglePasswordVisibility(inputId) {
     }
 }
 
-// Preview на качена снимка
 function previewImage(input, previewId) {
     const file = input.files[0];
     const preview = document.getElementById(previewId);
@@ -365,7 +340,6 @@ function previewImage(input, previewId) {
     }
 }
 
-// Автоматично преоразмеряване на textarea
 function autoResizeTextarea() {
     const textareas = document.querySelectorAll('textarea.auto-resize');
     
@@ -377,7 +351,6 @@ function autoResizeTextarea() {
     });
 }
 
-// Анимации при скролване
 function initScrollAnimations() {
     const elements = document.querySelectorAll('.fade-in-up');
     
@@ -400,10 +373,8 @@ function initScrollAnimations() {
     });
 }
 
-// Инициализиране на scroll анимации при зареждане
 document.addEventListener('DOMContentLoaded', initScrollAnimations);
 
-// Debounce функция
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -416,7 +387,6 @@ function debounce(func, wait) {
     };
 }
 
-// Smooth scroll за anchor линкове
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();

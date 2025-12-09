@@ -113,7 +113,7 @@ $popularGenres = [
                     <?php endif; ?>
                     
                     <form method="POST" enctype="multipart/form-data" id="createAnimeForm">
-                        <!-- Заглавие -->
+                        
                         <div class="mb-4">
                             <label for="title" class="form-label fw-semibold">
                                 Заглавие <span class="text-danger">*</span>
@@ -123,7 +123,7 @@ $popularGenres = [
                                    placeholder="Въведете заглавие на анимето..." required>
                         </div>
                         
-                        <!-- Жанр -->
+                        
                         <div class="mb-4">
                             <label for="genre" class="form-label fw-semibold">
                                 Жанр <span class="text-danger">*</span>
@@ -148,18 +148,18 @@ $popularGenres = [
                             </div>
                         </div>
                         
-                        <!-- Описание -->
+                      
                         <div class="mb-4">
                             <label for="description" class="form-label fw-semibold">Описание</label>
                             <textarea class="form-control auto-resize" id="description" name="description" rows="4"
                                       placeholder="Кратко описание на анимето..."><?= isset($description) ? htmlspecialchars($description) : '' ?></textarea>
                         </div>
                         
-                        <!-- Банер изображение -->
+                       
                         <div class="mb-4">
                             <label class="form-label fw-semibold">Банер изображение</label>
                             
-                            <!-- Табове за различните опции -->
+                            
                             <ul class="nav nav-tabs mb-3" id="imageTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" 
@@ -176,7 +176,7 @@ $popularGenres = [
                             </ul>
                             
                             <div class="tab-content" id="imageTabContent">
-                                <!-- Качване на файл -->
+                                
                                 <div class="tab-pane fade show active" id="upload-pane">
                                     <input type="file" class="form-control" id="banner_upload" name="banner_upload" 
                                            accept="image/*" onchange="previewImage(this, 'imagePreview')">
@@ -185,7 +185,7 @@ $popularGenres = [
                                     </div>
                                 </div>
                                 
-                                <!-- URL адрес -->
+                               
                                 <div class="tab-pane fade" id="url-pane">
                                     <input type="url" class="form-control" id="image_url" name="image_url" 
                                            value="<?= isset($imageUrl) ? htmlspecialchars($imageUrl) : '' ?>"
@@ -196,13 +196,13 @@ $popularGenres = [
                                 </div>
                             </div>
                             
-                            <!-- Preview на изображението -->
+                            
                             <div class="mt-3">
                                 <img id="imagePreview" class="img-fluid rounded" style="max-height: 200px; display: none;" alt="Preview">
                             </div>
                         </div>
                         
-                        <!-- Бутони -->
+                        
                         <div class="d-flex justify-content-between">
                             <a href="index.php" class="btn btn-outline-secondary">
                                 <i class="bi bi-arrow-left me-2"></i>Назад
@@ -223,7 +223,6 @@ function selectGenre(genre) {
     document.getElementById('genre').value = genre;
 }
 
-// Preview на URL изображение
 document.getElementById('image_url').addEventListener('input', function() {
     const url = this.value;
     const preview = document.getElementById('imagePreview');

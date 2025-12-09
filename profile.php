@@ -33,7 +33,6 @@ function updateProfile() {
     $username = sanitizeInput($_POST['username'] ?? '');
     $email = sanitizeInput($_POST['email'] ?? '');
     
-    // Валидация
     if (empty($username)) {
         $errors[] = 'Потребителското име е задължително.';
     } elseif (strlen($username) < 3) {
@@ -46,7 +45,6 @@ function updateProfile() {
         $errors[] = 'Моля въведете валиден имейл адрес.';
     }
     
-    // Проверка за уникалност (освен за текущия потребител)
     if (empty($errors)) {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE (username = ? OR email = ?) AND id != ?");
         $stmt->execute([$username, $email, $_SESSION['user_id']]);
@@ -55,13 +53,12 @@ function updateProfile() {
         }
     }
     
-    // Обновяване
+  
     if (empty($errors)) {
         $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
         if ($stmt->execute([$username, $email, $_SESSION['user_id']])) {
             $success = 'Профилът е обновен успешно!';
-            // Обновяване на данните в сесията
-            $_SESSION['user_data'] = null; // За да се презаредят при следващо извикване
+            $_SESSION['user_data'] = null;
         } else {
             $errors[] = 'Грешка при обновяването на профила.';
         }
@@ -75,7 +72,6 @@ function changePassword() {
     $newPassword = $_POST['new_password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
     
-    // Валидация
     if (empty($currentPassword)) {
         $errors[] = 'Текущата парола е задължителна.';
     } elseif (!password_verify($currentPassword, $currentUser['password_hash'])) {
@@ -92,7 +88,7 @@ function changePassword() {
         $errors[] = 'Паролите не съвпадат.';
     }
     
-    // Обновяване
+    
     if (empty($errors)) {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
@@ -114,7 +110,7 @@ function uploadAvatar() {
     
     $uploadDir = 'uploads/avatars/';
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    $maxSize = 2 * 1024 * 1024; // 2MB
+    $maxSize = 2 * 1024 * 1024;
     
     $fileType = $_FILES['avatar']['type'];
     $fileSize = $_FILES['avatar']['size'];
@@ -134,7 +130,6 @@ function uploadAvatar() {
     $uploadPath = $uploadDir . $fileName;
     
     if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadPath)) {
-        // Изтриване на стария avatar ако съществува
         $stmt = $pdo->prepare("SELECT avatar FROM users WHERE id = ?");
         $stmt->execute([$_SESSION['user_id']]);
         $oldAvatar = $stmt->fetchColumn();
@@ -143,7 +138,6 @@ function uploadAvatar() {
             unlink($oldAvatar);
         }
         
-        // Обновяване в базата
         $stmt = $pdo->prepare("UPDATE users SET avatar = ? WHERE id = ?");
         if ($stmt->execute([$uploadPath, $_SESSION['user_id']])) {
             $success = 'Аватарът е обновен успешно!';
@@ -155,7 +149,6 @@ function uploadAvatar() {
     }
 }
 
-// Извличане на статистики за потребителя
 $stmt = $pdo->prepare("
     SELECT 
         (SELECT COUNT(*) FROM anime WHERE created_by = ?) as anime_count,
@@ -166,7 +159,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$_SESSION['user_id'], $_SESSION['user_id'], $_SESSION['user_id'], $_SESSION['user_id']]);
 $userStats = $stmt->fetch();
 
-// Извличане на последните дейности на потребителя
 $stmt = $pdo->prepare("
     SELECT 
         d.id as discussion_id,
@@ -198,7 +190,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$_SESSION['user_id']]);
 $userAnime = $stmt->fetchAll();
 
-// Извличане на последните активности на потребителя (комбинирани)
 $stmt = $pdo->prepare("
     (SELECT 
         'discussion' as activity_type,
@@ -253,7 +244,7 @@ require_once 'header.php';
 ?>
 
 <div class="container mt-4">
-    <!-- Профилен header -->
+    
     <div class="profile-header mb-4">
         <div class="row align-items-center">
             <div class="col-md-3 text-center">
@@ -279,7 +270,7 @@ require_once 'header.php';
                     <?php endif; ?>
                 </p>
                 
-                <!-- Статистики -->
+                
                 <div class="row g-3">
                     <div class="col-6 col-md-3">
                         <div class="text-center">
@@ -310,7 +301,7 @@ require_once 'header.php';
         </div>
     </div>
     
-    <!-- Уведомления -->
+  
     <?php if (!empty($errors)): ?>
         <div class="alert alert-danger">
             <i class="bi bi-exclamation-triangle me-2"></i>
@@ -328,7 +319,7 @@ require_once 'header.php';
         </div>
     <?php endif; ?>
     
-    <!-- Табове -->
+   
     <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" 
@@ -350,12 +341,12 @@ require_once 'header.php';
         </li>
     </ul>
     
-    <!-- Съдържание на табовете -->
+    
     <div class="tab-content" id="profileTabsContent">
-        <!-- Общ преглед -->
+        
         <div class="tab-pane fade show active" id="overview">
             <div class="row g-4">
-                <!-- Последни дискусии -->
+             
                 <div class="col-lg-6">
                     <div class="card h-100">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -397,7 +388,7 @@ require_once 'header.php';
                     </div>
                 </div>
                 
-                <!-- Добавени анимета -->
+             
                 <div class="col-lg-6">
                     <div class="card h-100">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -450,10 +441,10 @@ require_once 'header.php';
             </div>
         </div>
         
-        <!-- Настройки -->
+        
         <div class="tab-pane fade" id="settings">
             <div class="row g-4">
-                <!-- Основни настройки -->
+                
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
@@ -485,7 +476,7 @@ require_once 'header.php';
                     </div>
                 </div>
                 
-                <!-- Смяна на парола -->
+               
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
@@ -525,7 +516,7 @@ require_once 'header.php';
             </div>
         </div>
         
-        <!-- Дейност -->
+        
         <div class="tab-pane fade" id="activity">
             <div class="card">
                 <div class="card-header">
@@ -598,7 +589,7 @@ require_once 'header.php';
     </div>
 </div>
 
-<!-- Modal за качване на аватар -->
+
 <div class="modal fade" id="avatarModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

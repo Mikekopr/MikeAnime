@@ -9,32 +9,32 @@ $currentUser = getCurrentUser();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? $pageTitle . ' - ' : '' ?><?= SITE_NAME ?></title>
     
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Собствени стилове -->
+    
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <!-- Logo/Brand -->
+            
             <a class="navbar-brand fw-bold" href="index.php">
                 <i class="bi bi-play-circle me-2"></i><?= SITE_NAME ?>
             </a>
 
-            <!-- Toggle button for mobile -->
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navbar content -->
+            
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Search form -->
+                
                 <div class="mx-auto position-relative" style="width: 400px; max-width: 100%;">
                     <div class="input-group">
                         <input type="text" class="form-control" id="searchInput" 
@@ -43,12 +43,12 @@ $currentUser = getCurrentUser();
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                    <!-- Search results dropdown -->
+                    
                     <div id="searchResults" class="search-results position-absolute w-100 bg-white border border-top-0 rounded-bottom shadow-lg" style="display: none; z-index: 1000;">
                     </div>
                 </div>
 
-                <!-- Navigation links -->
+                
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">
@@ -98,9 +98,9 @@ $currentUser = getCurrentUser();
         </div>
     </nav>
 
-    <!-- Main content starts here -->
+    
     <main class="flex-grow-1"><?php
-    // Cookie banner
+    
     if (!isset($_COOKIE['cookies_accepted'])):
     ?>
     <div id="cookieBanner" class="alert alert-info alert-dismissible fade show mb-0 rounded-0 text-center" role="alert">

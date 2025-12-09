@@ -100,13 +100,13 @@ $allAnime = $stmt->fetchAll();
                     <?php endif; ?>
                     
                     <form method="POST" id="createDiscussionForm">
-                        <!-- Избор на аниме -->
+                        
                         <div class="mb-4">
                             <label for="anime_id" class="form-label fw-semibold">
                                 Избери аниме <span class="text-danger">*</span>
                             </label>
                             
-                            <!-- Показване на избраното аниме ако има такова -->
+                            
                             <?php if ($selectedAnime): ?>
                                 <div class="alert alert-info d-flex align-items-center">
                                     <img src="<?= $selectedAnime['banner_image'] ?: 'assets/img/default-anime.jpg' ?>" 
@@ -156,7 +156,7 @@ $allAnime = $stmt->fetchAll();
                             </div>
                         </div>
                         
-                        <!-- Заглавие на дискусията -->
+
                         <div class="mb-4">
                             <label for="title" class="form-label fw-semibold">
                                 Заглавие на дискусията <span class="text-danger">*</span>
@@ -167,7 +167,7 @@ $allAnime = $stmt->fetchAll();
                                    required>
                         </div>
                         
-                        <!-- Съдържание -->
+                        
                         <div class="mb-4">
                             <label for="content" class="form-label fw-semibold">
                                 Първи коментар <span class="text-danger">*</span>
@@ -180,7 +180,7 @@ $allAnime = $stmt->fetchAll();
                             </div>
                         </div>
                         
-                        <!-- Бутони -->
+                        
                         <div class="d-flex justify-content-between">
                             <a href="javascript:history.back()" class="btn btn-outline-secondary">
                                 <i class="bi bi-arrow-left me-2"></i>Назад
@@ -196,7 +196,7 @@ $allAnime = $stmt->fetchAll();
     </div>
 </div>
 
-<!-- Modal за избор на аниме -->
+
 <div class="modal fade" id="animeModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -229,7 +229,7 @@ $allAnime = $stmt->fetchAll();
     </div>
 </div>
 
-<!-- Modal за създаване на ново аниме -->
+
 <div class="modal fade" id="createAnimeModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -404,7 +404,6 @@ function createQuickAnime() {
     });
 }
 
-// Автоматично преоразмеряване на textarea
 autoResizeTextarea();
 
 document.getElementById('createAnimeModal').addEventListener('hidden.bs.modal', function() {

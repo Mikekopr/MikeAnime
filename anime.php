@@ -65,7 +65,7 @@ require_once 'header.php';
 ?>
 
 <div class="container mt-4">
-    <!-- Информация за анимето -->
+    
     <div class="row mb-5">
         <div class="col-lg-4 mb-4">
             <div class="position-sticky" style="top: 100px;">
@@ -73,7 +73,7 @@ require_once 'header.php';
                      class="img-fluid rounded shadow anime-poster" 
                      alt="<?= htmlspecialchars($anime['title']) ?>">
                 
-                <!-- Рейтинг секция -->
+                
                 <div class="card mt-3">
                     <div class="card-body text-center">
                         <h5 class="card-title">Рейтинг</h5>
@@ -108,7 +108,7 @@ require_once 'header.php';
                             </div>
                         <?php endif; ?>
                         
-                        <!-- Гласуване (само за логнати потребители) -->
+                        
                         <?php if (isLoggedIn()): ?>
                             <hr>
                             <h6>Оценете това аниме:</h6>
@@ -140,7 +140,7 @@ require_once 'header.php';
                     </div>
                 </div>
                 
-                <!-- Рейтинг разбивка -->
+                
                 <?php if (!empty($ratingBreakdown)): ?>
                 <div class="card mt-3">
                     <div class="card-body">
@@ -163,7 +163,7 @@ require_once 'header.php';
         </div>
         
         <div class="col-lg-8">
-            <!-- Заглавие и основна информация -->
+            
             <div class="mb-4">
                 <h1 class="display-5 fw-bold mb-3"><?= htmlspecialchars($anime['title']) ?></h1>
                 
@@ -200,7 +200,7 @@ require_once 'header.php';
                 <?php endif; ?>
             </div>
             
-            <!-- Дискусии -->
+            
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
@@ -315,7 +315,6 @@ require_once 'header.php';
 
 <script>
 function loadAllDiscussions(animeId) {
-    // Това ще се имплементира за зареждане на всички дискусии
     showToast('Функцията ще бъде добавена скоро', 'info');
 }
 </script>

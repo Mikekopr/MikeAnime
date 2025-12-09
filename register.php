@@ -2,7 +2,7 @@
 $pageTitle = 'Регистрация';
 require_once 'header.php';
 
-// Ако потребителят е вече логнат, пренасочи към началото
+
 if (isLoggedIn()) {
     redirectTo('index.php');
 }
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
     
-    // Валидация
+    
     if (empty($username)) {
         $errors[] = 'Потребителското име е задължително.';
     } elseif (strlen($username) < 3) {

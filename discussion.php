@@ -7,7 +7,6 @@ if (!$discussionId) {
     redirectTo('index.php');
 }
 
-// Извличане на информация за дискусията и свързаното аниме
 $stmt = $pdo->prepare("
     SELECT 
         d.*,
@@ -29,7 +28,7 @@ if (!$discussion) {
 
 $pageTitle = $discussion['title'];
 
-// Извличане на коментари
+
 $stmt = $pdo->prepare("
     SELECT 
         c.*,
@@ -49,7 +48,7 @@ require_once 'header.php';
 ?>
 
 <div class="container mt-4">
-    <!-- Header на дискусията -->
+   
     <div class="row mb-4">
         <div class="col-12">
             <div class="card discussion-card">
@@ -86,7 +85,7 @@ require_once 'header.php';
         </div>
     </div>
     
-    <!-- Коментари -->
+   
     <div class="row">
         <div class="col-lg-8">
             <div class="card">
@@ -141,7 +140,7 @@ require_once 'header.php';
                 </div>
             </div>
             
-            <!-- Форма за нов коментар -->
+            
             <?php if (isLoggedIn()): ?>
                 <div class="card mt-4">
                     <div class="card-header">
@@ -182,9 +181,9 @@ require_once 'header.php';
             <?php endif; ?>
         </div>
         
-        <!-- Странична лента -->
+       
         <div class="col-lg-4">
-            <!-- Информация за анимето -->
+            
             <div class="card mb-4">
                 <div class="card-header">
                     <h6 class="mb-0">
@@ -212,7 +211,7 @@ require_once 'header.php';
                 </div>
             </div>
             
-            <!-- Други дискусии за това аниме -->
+            
             <?php
             $stmt = $pdo->prepare("
                 SELECT 
@@ -319,7 +318,7 @@ function submitComment(event) {
         return;
     }
     
-    // Деактивиране на бутона за да се избегне двойно изпращане
+    
     const submitBtn = event.target.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Изпращане...';

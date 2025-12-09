@@ -2,7 +2,7 @@
 $pageTitle = 'Начало';
 require_once 'header.php';
 
-// Извличане на най-новите дискусии
+
 $stmt = $pdo->prepare("
     SELECT 
         d.id as discussion_id,
@@ -26,7 +26,6 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $discussions = $stmt->fetchAll();
 
-// Извличане на най-високо оценените анимета
 $stmt = $pdo->prepare("
     SELECT 
         a.*,
@@ -42,7 +41,6 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $topAnime = $stmt->fetchAll();
 
-// Общи статистики
 $stats = [
     'anime' => $pdo->query("SELECT COUNT(*) FROM anime")->fetchColumn(),
     'discussions' => $pdo->query("SELECT COUNT(*) FROM discussions")->fetchColumn(),
@@ -51,7 +49,7 @@ $stats = [
 ];
 ?>
 
-<!-- Hero Section -->
+
 <section class="bg-primary text-white py-5">
     <div class="container">
         <div class="row align-items-center">
@@ -88,7 +86,7 @@ $stats = [
     </div>
 </section>
 
-<!-- Статистики -->
+
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row g-4">
@@ -124,7 +122,7 @@ $stats = [
     </div>
 </section>
 
-<!-- Най-високо оценени анимета -->
+
 <?php if (!empty($topAnime)): ?>
 <section class="py-5">
     <div class="container">
@@ -183,7 +181,7 @@ $stats = [
 </section>
 <?php endif; ?>
 
-<!-- Най-нови дискусии -->
+
 <section class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-5">
@@ -266,7 +264,7 @@ $stats = [
 
 <script>
 function loadMoreDiscussions() {
-    // Това ще се имплементира в main.js
+
     alert('Функцията за зареждане на още дискусии ще бъде добавена в main.js');
 }
 </script>

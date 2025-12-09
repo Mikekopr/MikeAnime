@@ -33,7 +33,6 @@ function addComment() {
     $discussionId = intval($_POST['discussion_id'] ?? 0);
     $content = sanitizeInput($_POST['content'] ?? '');
     
-    // Валидация
     if (!$discussionId || empty($content)) {
         echo json_encode(['success' => false, 'message' => 'Невалидни данни.']);
         return;
@@ -72,7 +71,6 @@ function toggleCommentLike() {
     
     $commentId = intval($_POST['comment_id'] ?? 0);
     
-    // Валидация
     if (!$commentId) {
         echo json_encode(['success' => false, 'message' => 'Невалиден коментар.']);
         return;
@@ -88,7 +86,6 @@ function toggleCommentLike() {
     try {
         $pdo->beginTransaction();
         
-        // Проверка дали потребителят вече е харесал коментара
         $stmt = $pdo->prepare("SELECT id FROM comment_likes WHERE comment_id = ? AND user_id = ?");
         $stmt->execute([$commentId, $_SESSION['user_id']]);
         $existingLike = $stmt->fetch();
@@ -96,7 +93,6 @@ function toggleCommentLike() {
         $liked = false;
         
         if ($existingLike) {
-            // Премахване на харесване
             $stmt = $pdo->prepare("DELETE FROM comment_likes WHERE comment_id = ? AND user_id = ?");
             $stmt->execute([$commentId, $_SESSION['user_id']]);
             $liked = false;

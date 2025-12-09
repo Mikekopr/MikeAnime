@@ -2,7 +2,6 @@
 $pageTitle = 'Вход';
 require_once 'header.php';
 
-// Ако потребителят е вече логнат, пренасочи към началото
 if (isLoggedIn()) {
     redirectTo('index.php');
 }
@@ -14,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $remember = isset($_POST['remember']);
     
-    // Валидация
     if (empty($login)) {
         $errors[] = 'Моля въведете потребителско име или имейл.';
     }
@@ -23,26 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Паролата е задължителна.';
     }
     
-    // Проверка на потребителя
     if (empty($errors)) {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$login, $login]);
         $user = $stmt->fetch();
         
         if ($user && password_verify($password, $user['password_hash'])) {
-            // Успешен вход
             $_SESSION['user_id'] = $user['id'];
             session_regenerate_id(true);
             
-            // Ако е избрано "Запомни ме"
             if ($remember) {
                 $token = bin2hex(random_bytes(32));
                 $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
                 $stmt->execute([$token, $user['id']]);
-                setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/'); // 30 дни
+                setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/');
             }
             
-            // Пренасочване
             $redirect = $_GET['redirect'] ?? 'index.php';
             redirectTo($redirect);
         } else {
@@ -115,27 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a href="register.php" class="btn btn-outline-primary">
                             <i class="bi bi-person-plus me-2"></i>Регистрация
                         </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Демо профили за тестване -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Демо профили за тестване</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-6 mb-2">
-                            <strong>Администратор:</strong><br>
-                            <code>admin@animetalk.bg</code><br>
-                            <small class="text-muted">парола: password</small>
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <strong>Потребител:</strong><br>
-                            <code>otaku@test.bg</code><br>
-                            <small class="text-muted">парола: password</small>
-                        </div>
                     </div>
                 </div>
             </div>

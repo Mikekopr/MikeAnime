@@ -5,12 +5,11 @@ define('DB_NAME', 'animetalk_bg');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-// Други настройки
 define('SITE_NAME', 'AnimeTalk BG');
 define('SITE_URL', 'http://localhost/MikeAnime');
 define('UPLOADS_DIR', 'uploads/');
 
-// Стартиране на сесия
+
 if (!session_id()) {
     session_start();
 }
@@ -72,7 +71,6 @@ function checkRememberToken() {
         
         if ($user) {
             $_SESSION['user_id'] = $user['id'];
-            // Регенерираме токена за безопасност
             $newToken = bin2hex(random_bytes(32));
             $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
             $stmt->execute([$newToken, $user['id']]);
@@ -81,6 +79,6 @@ function checkRememberToken() {
     }
 }
 
-// Проверяваме remember token при всяко зареждане
+
 checkRememberToken();
 ?>
