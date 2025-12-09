@@ -1,0 +1,362 @@
+/* AnimeTalk BG Custom Styles */
+
+/* Основни стилове */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar стилове */
+.navbar-brand {
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    transition: color 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ff6b35 !important;
+}
+
+/* Търсене */
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+    border-top: none !important;
+}
+
+.search-result-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Кардове за аниме/дискусии */
+.anime-card, .discussion-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.anime-card:hover, .discussion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.anime-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.anime-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.discussion-card .anime-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Жанрове badge */
+.genre-badge {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+}
+
+/* Рейтинг звезди */
+.rating-stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.rating-input {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    color: #ddd;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.rating-input:hover label,
+.rating-input:hover ~ .rating-input label {
+    color: #ffc107;
+}
+
+.rating-input input:checked ~ label,
+.rating-input input:checked ~ .rating-input label {
+    color: #ffc107;
+}
+
+/* Статистики */
+.stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.stats-number {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+}
+
+/* Коментари */
+.comment-item {
+    border-left: 4px solid #ff6b35;
+    background: white;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.like-btn {
+    border: none;
+    background: none;
+    color: #6c757d;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.like-btn:hover {
+    color: #ff6b35;
+}
+
+.like-btn.liked {
+    color: #ff6b35;
+}
+
+/* Форми */
+.form-control:focus {
+    border-color: #ff6b35;
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    border: none;
+    border-radius: 25px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #e55a2b, #e8841a);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.btn-outline-primary {
+    border-color: #ff6b35;
+    color: #ff6b35;
+    border-radius: 25px;
+    padding: 0.6rem 1.5rem;
+}
+
+.btn-outline-primary:hover {
+    background-color: #ff6b35;
+    border-color: #ff6b35;
+}
+
+/* Профилна страница */
+.profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивност */
+@media (max-width: 768px) {
+    .anime-card .card-img-top {
+        height: 150px;
+    }
+    
+    .discussion-card .anime-thumbnail {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .stats-number {
+        font-size: 1.5rem;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #e55a2b, #e8841a);
+}
+
+/* Toast notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+}
+
+.toast.success {
+    border-left: 4px solid #28a745;
+}
+
+.toast.error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast.warning {
+    border-left: 4px solid #ffc107;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #ff6b35;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Japanese decorative elements */
+.japanese-wave::before {
+    content: "🌊";
+    opacity: 0.1;
+    font-size: 2rem;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.japanese-sun::before {
+    content: "☀️";
+    opacity: 0.1;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

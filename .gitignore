@@ -1,0 +1,34 @@
+# Uploaded files
+uploads/anime_banners/*
+uploads/avatars/*
+!uploads/anime_banners/.gitkeep
+!uploads/avatars/.gitkeep
+
+# Database configuration (if sensitive)
+# config.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+error.log
+access.log
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Backup files
+*.bak
+*.backup
