@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// AJAX файл за бързо създаване на аниме от модал
 header('Content-Type: application/json');
 
 if (!isLoggedIn()) {
@@ -18,9 +17,8 @@ $title = sanitizeInput($_POST['title'] ?? '');
 $genre = sanitizeInput($_POST['genre'] ?? '');
 $description = sanitizeInput($_POST['description'] ?? '');
 $imageUrl = $_POST['imageUrl'] ?? '';
-$bannerImage = 'assets/img/default-anime.jpg'; // По подразбиране
+$bannerImage = 'assets/img/default-anime.jpg';
 
-// Валидация
 if (empty($title)) {
     echo json_encode(['success' => false, 'message' => 'Заглавието е задължително.']);
     exit;
@@ -31,11 +29,9 @@ if (empty($genre)) {
     exit;
 }
 
-// Обработка на изображението от URL
 if (!empty($imageUrl)) {
     $validatedUrl = filter_var($imageUrl, FILTER_VALIDATE_URL);
     if ($validatedUrl) {
-        // Проверка дали URL-ът съдържа изображение
         $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         $urlPath = parse_url($validatedUrl, PHP_URL_PATH);
         $extension = strtolower(pathinfo($urlPath, PATHINFO_EXTENSION));

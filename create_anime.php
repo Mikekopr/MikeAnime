@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Проверка за логнат потребител
 if (!isLoggedIn()) {
     redirectTo('login.php?redirect=create_anime.php');
 }
@@ -15,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = sanitizeInput($_POST['description'] ?? '');
     $imageUrl = sanitizeInput($_POST['image_url'] ?? '');
     
-    // Валидация
     if (empty($title)) {
         $errors[] = 'Заглавието е задължително.';
     } elseif (strlen($title) > 255) {
@@ -26,12 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Жанрът е задължителен.';
     }
     
-    // Обработка на качена снимка
     $bannerImage = null;
     if (isset($_FILES['banner_upload']) && $_FILES['banner_upload']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'uploads/anime_banners/';
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $maxSize = 5 * 1024 * 1024; // 5MB
+        $maxSize = 5 * 1024 * 1024;
         
         $fileType = $_FILES['banner_upload']['type'];
         $fileSize = $_FILES['banner_upload']['size'];
@@ -52,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     } elseif (!empty($imageUrl)) {
-        // Валидация на URL
         if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
             $bannerImage = $imageUrl;
         } else {
@@ -60,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Проверка за дублиране
     if (empty($errors)) {
         $stmt = $pdo->prepare("SELECT id FROM anime WHERE title = ?");
         $stmt->execute([$title]);
@@ -69,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Създаване на анимето
     if (empty($errors)) {
         $stmt = $pdo->prepare("
             INSERT INTO anime (title, genre, description, banner_image, created_by) 

@@ -10,7 +10,7 @@ if (isLoggedIn()) {
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login = sanitizeInput($_POST['login'] ?? ''); // може да е username или email
+    $login = sanitizeInput($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     $remember = isset($_POST['remember']);
     

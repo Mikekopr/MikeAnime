@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Този файл се извиква чрез AJAX за гласуване
 header('Content-Type: application/json');
 
 if (!isLoggedIn()) {
@@ -25,7 +24,6 @@ if (!$animeId || $rating < 1 || $rating > 10) {
     exit;
 }
 
-// Проверка дали анимето съществува
 $stmt = $pdo->prepare("SELECT id FROM anime WHERE id = ?");
 $stmt->execute([$animeId]);
 if (!$stmt->fetch()) {
@@ -46,7 +44,6 @@ try {
         $stmt = $pdo->prepare("UPDATE ratings SET rating = ? WHERE anime_id = ? AND user_id = ?");
         $stmt->execute([$rating, $animeId, $_SESSION['user_id']]);
     } else {
-        // Създаване на нова оценка
         $stmt = $pdo->prepare("INSERT INTO ratings (anime_id, user_id, rating) VALUES (?, ?, ?)");
         $stmt->execute([$animeId, $_SESSION['user_id'], $rating]);
     }

@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Проверка за логнат потребител
 if (!isLoggedIn()) {
     redirectTo('login.php?redirect=profile.php');
 }
@@ -12,7 +11,6 @@ $pageTitle = 'Профил - ' . $currentUser['username'];
 $errors = [];
 $success = '';
 
-// Обработка на форми
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     

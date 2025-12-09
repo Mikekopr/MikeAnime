@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Проверка за логнат потребител
 if (!isLoggedIn()) {
     redirectTo('login.php?redirect=create_discussion.php');
 }
@@ -10,7 +9,6 @@ $errors = [];
 $success = false;
 $selectedAnimeId = intval($_GET['anime_id'] ?? 0);
 
-// Извличане на информация за избраното аниме (ако има такова)
 $selectedAnime = null;
 if ($selectedAnimeId) {
     $stmt = $pdo->prepare("SELECT * FROM anime WHERE id = ?");
@@ -23,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = sanitizeInput($_POST['title'] ?? '');
     $content = sanitizeInput($_POST['content'] ?? '');
     
-    // Валидация
     if (!$animeId) {
         $errors[] = 'Моля изберете аниме за дискусията.';
     }
@@ -38,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Съдържанието е задължително.';
     }
     
-    // Проверка дали анимето съществува
     if (!$errors && $animeId) {
         $stmt = $pdo->prepare("SELECT id FROM anime WHERE id = ?");
         $stmt->execute([$animeId]);
@@ -47,12 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Създаване на дискусията
     if (empty($errors)) {
         try {
             $pdo->beginTransaction();
             
-            // Създаване на дискусията
             $stmt = $pdo->prepare("
                 INSERT INTO discussions (anime_id, title, created_by) 
                 VALUES (?, ?, ?)
@@ -60,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$animeId, $title, $_SESSION['user_id']]);
             $discussionId = $pdo->lastInsertId();
             
-            // Добавяне на първия коментар
             $stmt = $pdo->prepare("
                 INSERT INTO comments (discussion_id, user_id, content) 
                 VALUES (?, ?, ?)
@@ -80,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Създай дискусия';
 require_once 'header.php';
 
-// Извличане на всички анимета за dropdown
 $stmt = $pdo->prepare("SELECT id, title, genre FROM anime ORDER BY title ASC");
 $stmt->execute();
 $allAnime = $stmt->fetchAll();
@@ -318,7 +310,6 @@ $allAnime = $stmt->fetchAll();
 </style>
 
 <script>
-// Функции за работа с аниме селекцията
 function selectAnime(id, title, genre) {
     selectAnimeWithImage(id, title, genre, 'assets/img/default-anime.jpg');
 }
@@ -332,7 +323,6 @@ function selectAnimeWithImage(id, title, genre, bannerImage) {
     document.getElementById('selectedAnimePreview').classList.remove('d-none');
     document.getElementById('animeSearch').value = title;
     
-    // Затваряне на модала
     const modal = bootstrap.Modal.getInstance(document.getElementById('animeModal'));
     if (modal) modal.hide();
 }
@@ -344,13 +334,11 @@ function clearAnimeSelection() {
 }
 
 function changeAnime() {
-    // Показване на селектора отново
     document.querySelector('input[name="anime_id"]').type = 'hidden';
     document.querySelector('#animeSelector').style.display = 'block';
     document.querySelector('.alert-info').style.display = 'none';
 }
 
-// Търсене в списъка с аниме в модала
 document.getElementById('modalAnimeSearch').addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
     const animeOptions = document.querySelectorAll('.anime-option');
@@ -365,7 +353,6 @@ document.getElementById('modalAnimeSearch').addEventListener('input', function()
     });
 });
 
-// AJAX търсене в полето за търсене
 let searchTimeout;
 document.getElementById('animeSearch')?.addEventListener('input', function() {
     clearTimeout(searchTimeout);
@@ -374,11 +361,9 @@ document.getElementById('animeSearch')?.addEventListener('input', function() {
     if (query.length < 2) return;
     
     searchTimeout = setTimeout(() => {
-        // Тук може да добавите AJAX за търсене в реално време
     }, 300);
 });
 
-// Създаване на бързо аниме
 function createQuickAnime() {
     const title = document.getElementById('quickTitle').value.trim();
     const genre = document.getElementById('quickGenre').value.trim();
@@ -390,14 +375,12 @@ function createQuickAnime() {
         return;
     }
     
-    // Подготовка на данните за изпращане
     const formData = new FormData();
     formData.append('title', title);
     formData.append('genre', genre);
     formData.append('description', description);
     formData.append('imageUrl', imageUrl);
     
-    // AJAX заявка за създаване на аниме
     fetch('create_anime_ajax.php', {
         method: 'POST',
         body: formData
@@ -409,7 +392,6 @@ function createQuickAnime() {
             bootstrap.Modal.getInstance(document.getElementById('createAnimeModal')).hide();
             showToast('Анимето е създадено успешно!', 'success');
             
-            // Изчистване на формата
             document.getElementById('quickAnimeForm').reset();
             document.getElementById('imagePreview').classList.add('d-none');
         } else {
@@ -425,15 +407,12 @@ function createQuickAnime() {
 // Автоматично преоразмеряване на textarea
 autoResizeTextarea();
 
-// Изчистване на модала при затваряне
 document.getElementById('createAnimeModal').addEventListener('hidden.bs.modal', function() {
     document.getElementById('quickAnimeForm').reset();
     document.getElementById('imagePreview').classList.add('d-none');
 });
 
-// Настройка на обработчиците за превюто на изображенията
 function setupImagePreviewHandlers() {
-    // Преглед на изображение от URL
     const urlInput = document.getElementById('quickImageUrl');
     if (urlInput) {
         urlInput.addEventListener('input', function() {
@@ -459,7 +438,6 @@ function setupImagePreviewHandlers() {
 document.addEventListener('DOMContentLoaded', setupImagePreviewHandlers);
 document.getElementById('createAnimeModal')?.addEventListener('shown.bs.modal', setupImagePreviewHandlers);
 
-// Проверка дали URL-ът е валиден за изображение
 function isValidImageUrl(url) {
     try {
         new URL(url);

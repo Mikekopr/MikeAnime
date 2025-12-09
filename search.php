@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Този файл се извиква чрез AJAX за търсене на анимета
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -42,13 +41,12 @@ try {
     ");
     
     $stmt->execute([
-        $searchTerm, $searchTerm, $searchTerm, // За WHERE условията
-        $query . '%', $query . '%' // За подредбата
+        $searchTerm, $searchTerm, $searchTerm,
+        $query . '%', $query . '%'
     ]);
     
     $results = $stmt->fetchAll();
     
-    // Форматиране на резултатите
     $formattedResults = array_map(function($anime) {
         return [
             'id' => $anime['id'],
